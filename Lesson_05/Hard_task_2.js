@@ -1,14 +1,17 @@
 'use strict';
 
-const a = 8;
-const b = 4;
+const a = 0;
+const b = -8;
 
-const minFunc = (num1Original, num2Original) => {
-  let num1 = num1Original;
-  let num2 = num2Original;
+const minFunc = (a, b) => {
+  let arithmeticMean = (a + b) / 2;
+  let diffirence = Math.abs(arithmeticMean - a);
+  let maxNumber = arithmeticMean + diffirence;
+  let minNumber = arithmeticMean - diffirence;
 
-  const result = num1 > num2;
-  console.log(`${num1} больше ${num2}: ${result}`);
+  console.log(`Значения: ${a} и ${b}`);  
+  console.log(`Максимальное число: ${maxNumber}`);
+  console.log(`Минимальное число: ${minNumber}`);
 };
 
 minFunc(a, b);
