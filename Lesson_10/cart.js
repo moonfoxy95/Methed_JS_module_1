@@ -6,11 +6,6 @@ const cart = {
   count: 0,
 
 
-  getTotalPrice() {
-    return this.totalPrice;    
-  },
-
-
   add(productName, productPrice, productQuantity = 1) {
     const product = {
       productName,
@@ -23,18 +18,11 @@ const cart = {
     this.totalPrice += (productPrice * productQuantity);    
   },
 
-
   increaceCount(x) {
     this.count += x;   
   },
 
-
-  calculateItemPrice() {
-    // this.totalPrice = 0;
-
-    // this.items.forEach(element => {
-    //   this.totalPrice += (element.productPrice * element.productQuantity);
-    // });    
+  calculateItemPrice() {   
     const calculate = this.items.reduce((acc, item) => {
       return acc + (item.productPrice * item.productQuantity);
     }, 0);
@@ -42,13 +30,11 @@ const cart = {
     return calculate;
   },
 
-
   clear() {
     this.items = [];
     this.totalPrice = 0;
     this.count = 0;    
   },
-
 
   print() {
     const result = JSON.stringify(this.items);
@@ -57,6 +43,14 @@ const cart = {
     return this.getTotalPrice();    
   },
 };
+
+
+Object.defineProperty(cart, 'overallPrice', {
+  get() {
+    return this.calculateItemPrice();
+  },
+});
+
 
 cart.add('makaroni', 3, 3);
 cart.add('pureshka', 11);
