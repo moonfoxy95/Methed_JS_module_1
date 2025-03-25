@@ -1,7 +1,7 @@
 'use strict';
 
 const cart = {
-  items: [],  
+  items: [],
   count: 0,
 
 
@@ -9,18 +9,18 @@ const cart = {
     const product = {
       productName,
       productPrice,
-      productQuantity
+      productQuantity,
     };
-    
+
     this.items.push(product);
-    this.count += 1;      
+    this.count += 1;
   },
 
   increaceCount(x) {
-    this.count += x;   
+    this.count += x;
   },
 
-  calculateItemPrice() {   
+  calculateItemPrice() {
     const calculate = this.items.reduce((acc, item) => {
       return acc + (item.productPrice * item.productQuantity);
     }, 0);
@@ -29,24 +29,24 @@ const cart = {
   },
 
   clear() {
-    this.items = [];    
-    this.count = 0;    
+    this.items = [];
+    this.count = 0;
   },
 
   print() {
     const result = JSON.stringify(this.items);
 
-    console.log(result);   
-    console.log(this.totalPrice)    
+    console.log(result);
+    console.log(this.totalPrice);
   },
 
   get totalPrice() {
     return this.calculateItemPrice();
-  }
-};
+  },
+},
 
 
-cart.add('makaroshki', 3, 3);
-cart.add('pureshka', 11);
-cart.add('kotletki', 40);
-cart.add('pelmeshki', 12, 5);
+// cart.add('makaroshki', 3, 3);
+// cart.add('pureshka', 11);
+// cart.add('kotletki', 40);
+// cart.add('pelmeshki', 12, 5);
