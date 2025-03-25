@@ -21,9 +21,8 @@ const cart = {
   },
 
   calculateItemPrice() {
-    const calculate = this.items.reduce((acc, item) => {
-      return acc + (item.productPrice * item.productQuantity);
-    }, 0);
+    const calculate = this.items.reduce((acc, item) =>
+      acc + (item.productPrice * item.productQuantity), 0);
 
     return calculate;
   },
@@ -43,10 +42,10 @@ const cart = {
   get totalPrice() {
     return this.calculateItemPrice();
   },
-},
+};
 
 
-// cart.add('makaroshki', 3, 3);
-// cart.add('pureshka', 11);
-// cart.add('kotletki', 40);
-// cart.add('pelmeshki', 12, 5);
+cart.add('makaroshki', 3, 3);
+cart.add('pureshka', 11);
+cart.add('kotletki', 40);
+cart.add('pelmeshki', 12, 5);
