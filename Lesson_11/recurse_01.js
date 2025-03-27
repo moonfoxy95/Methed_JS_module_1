@@ -16,41 +16,41 @@ let maxAttempts = undefined;
 
 
 const playGame = (attempt = 1) => {
-  const userGuess = parseInt(prompt(`${attempt}/${maxAttempts} Введите число от 
-    ${userInt1} до ${userInt2} (загадано ${randomInt}):`));
+  const userGuess = prompt(`${attempt}/${maxAttempts} Введите число от 
+    ${userInt1} до ${userInt2} (загадано ${randomInt}):`);
   const foundGuesses = userGuesses.includes(userGuess);
 
   if (userGuess === null) {
     return;
-  } else if (userGuess === randomInt) {
+  } else if (parseInt(userGuess) === randomInt) {
     alert(`${attempt}/${maxAttempts} Правильно! С ${attempt} попытки!`);
+    return;
   } else if (isNaN(userGuess) || userGuess === '') {
     alert(`${attempt}/${maxAttempts} Введите число, а не 
       ${typeof(userGuess)}. Попытка не засчитана. (загадано ${randomInt})`);
-    return playGame(attempt);
-  } else if (attempt >= maxAttempts) {
-    alert(`${attempt}/${maxAttempts} Вы израсходовали все ${maxAttempts} 
-      попыток и проигали.`);
   } else if (foundGuesses) {
     alert(`${attempt}/${maxAttempts} Число ${userGuess} уже 
       использовалось. Попытка не засчитана. (загадано ${randomInt})`);
-    return playGame(attempt);
+  } else if (attempt >= maxAttempts) {
+    alert(`${attempt}/${maxAttempts} Вы израсходовали все ${maxAttempts} 
+      попыток и проигали.`);
+    return;
   } else if (userGuess > randomInt) {
     userGuesses.push(userGuess);
     alert(`${attempt}/${maxAttempts} Число ${userGuess} больше 
       загаданного. Давай еще раз. (загадано ${randomInt})`);
     attempt += 1;
-    return playGame(attempt);
   } else if (userGuess < randomInt) {
     userGuesses.push(userGuess);
     alert(`${attempt}/${maxAttempts} Число ${userGuess} меньше
       загаданного. Давай еще раз. (загадано ${randomInt})`);
     attempt += 1;
-    return playGame(attempt);
   } else {
     alert('Непредвиденная ситуация');
     return;
   };
+
+  return playGame(attempt);
 };
 
 

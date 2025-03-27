@@ -36,7 +36,10 @@ const cart = {
   },
 
   increaceCount(x) {
-    this.count += x;
+    // this.count += x;
+    const totalProducts = this.items.reduce((acc, item) =>
+      acc + item.productQuantity, 0);
+    return totalProducts;
   },
 
   calculateItemPrice() {
@@ -49,6 +52,7 @@ const cart = {
   clear() {
     this.items = [];
     this.count = 0;
+    this.discount = 0;
   },
 
   print() {
