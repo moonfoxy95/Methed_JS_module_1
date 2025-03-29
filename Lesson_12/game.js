@@ -93,9 +93,9 @@
       // процесс игры
       const answer = autoFill(userInput); // автозаполнение ввода
       const computerInput = getComputerFigure(FIGURES_RUS); // ход AI
-      let roundWinner = undefined;
 
       // определение результата; есть ли answer в массиве фигур [FIGURES_RUS]
+      let roundWinner = undefined;
       if (checkUserInput(answer) === true) {
         roundWinner = getRoundWinner(answer, computerInput);
       } else {
