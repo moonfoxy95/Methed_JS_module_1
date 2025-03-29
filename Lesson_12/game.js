@@ -54,9 +54,9 @@
     return function start() {
       let userInput = prompt('камень, ножницы, бумага?');
 
-      const autoFill = (word) => {
-        if (word.length >= 2) {
-          const firstLetters = word.slice(0, word.length);
+      const autoFillInput = () => {
+        if (userInput.length >= 2) {
+          const firstLetters = userInput.slice(0, userInput.length);
           for (const figure of FIGURES_RUS) {
             if (figure.startsWith(firstLetters)) {
               userInput = figure;
@@ -79,7 +79,7 @@
       };
 
       // процесс игры
-      autoFill(userInput);
+      autoFillInput();
       checkUserInput(userInput);
       const computerInput = getComputerFigure(FIGURES_RUS);
       const roundWinner = getRoundWinner(userInput, computerInput);
