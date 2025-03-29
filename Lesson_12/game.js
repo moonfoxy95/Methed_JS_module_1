@@ -55,12 +55,11 @@
       let userInput = prompt('камень, ножницы, бумага?');
 
       const autoFill = (word) => {
-        if (word) {
-          const firstLetter = word[0].toLowerCase();
+        if (word.length >= 2) {
+          const firstLetters = word.slice(0, word.length);
           for (const figure of FIGURES_RUS) {
-            if (figure.startsWith(firstLetter)) {
+            if (figure.startsWith(firstLetters)) {
               userInput = figure;
-              console.log(figure);
               return userInput;
             };
           };
