@@ -26,12 +26,7 @@
   const getRoundWinner = (userFigure, computerFigure) => {
     if (userFigure === computerFigure) {
       return 'Ничья!';
-    };
-
-    // если отменить отмену игры
-    if (userFigure === false) {
-      return 'Продолжаем играть.';
-    };
+    };  
 
     if (userFigure === FIGURES_RUS[0] && computerFigure === FIGURES_RUS[1]) {
       return 'Победа!';
@@ -56,7 +51,7 @@
       const autoFill = (word) => {
         for (const figure of FIGURES_RUS) {
           // word.length на случай если ввод пустой ('')
-          if (word.length >= 1 && figure.startsWith(word)) {
+          if (word.length >= 1 && figure.startsWith(word.toLowerCase())) {
             return figure;
           };
         };
@@ -98,6 +93,8 @@
       let roundWinner = undefined;
       if (checkUserInput(answer) === true) {
         roundWinner = getRoundWinner(answer, computerInput);
+      } else if (answer === false) {
+        roundWinner = 'Продолжаем играть.'; // если отменить отмену игры
       } else {
         roundWinner = `Неверный ввод: ${answer}`;
       };
