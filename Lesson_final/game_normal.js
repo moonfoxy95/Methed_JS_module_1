@@ -169,7 +169,7 @@
           getRoundResult(playerTurn, checkedUserInput, botGuess); // определение результата раунда
           exitCondition = checkExitConditions(result.player, result.bot); // определение наличия шариков
         } else {
-          turnPlayer();
+          turnPlayer(); // неверный ввод пользователя
         };
 
         playerTurn = false;
