@@ -37,6 +37,7 @@
   const checkUserInput = (userInput, marbles) => {
     console.log('Введено:', userInput);
 
+    // чтобы null не сконвертировался далее в Number()
     if (userInput === null) {
       return null;
     };
@@ -158,7 +159,7 @@
         if (checkedUserInput === null) {
           const wantToQuit = confirm('Действительно хотите выйти?');
           if (wantToQuit === true) {
-            return;
+            return 'quit';
           };
         };
 
@@ -197,8 +198,11 @@
         };
       };
 
+      // ход игрока или бота, или выход через "отмена"
       if (playerTurn === true) {
-        turnPlayer();
+        if (turnPlayer() === 'quit') {
+          return;
+        };
       } else {
         turnBot();
       };
