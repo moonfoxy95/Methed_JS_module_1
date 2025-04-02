@@ -8,12 +8,12 @@
     return Math.floor(Math.random() * (maxFloored - minCeiled + 1) + minCeiled);
   };
 
-  const getBotGuess = () => {
+  const getBotGuess = (playerMarbles) => {
     const botGuessInt = getRandomIntInclusive(0, 1);
     let botGuess = undefined;
     let textBotGuess = undefined;
 
-    if (botGuessInt === 0) {
+    if (botGuessInt === 0 && playerMarbles !== 1) {
       textBotGuess = 'Бот загадал четное';
       botGuess = true;
     } else {
@@ -81,8 +81,6 @@
     return playAgain;
   };
 
-  const getLowestScore = (num1, num2) => Math.min(num1, num2);
-
   const game = () => {
     const result = {
       player: 5,
@@ -96,11 +94,18 @@
       let textPlayerWins = undefined;
 
       // ход игрока
+      // guess = true - четное; guess = false - нечетное
       if (playerTurn === true) {
         if ((guess === true && input % 2 === 0) ||
         (guess === false && input % 2 !== 0)) {
           result.player -= input;
           result.bot += input;
+
+          if (result.player < 0 || result.bot > 10) {
+            input += result.player;
+            result.player = 0;
+            result.bot = 10;
+          };
 
           textBotWins = `[Игрок: ${result.player}, Бот: ${result.bot}]\n` +
             `Бот угадал! Он забирает себе шарики: ${input}.`;
@@ -111,6 +116,12 @@
           result.player += input;
           result.bot -= input;
 
+          if (result.player > 10 || result.bot < 0) {
+            input += result.bot;
+            result.player = 10;
+            result.bot = 0;
+          };
+
           textPlayerWins = `[Игрок: ${result.player}, Бот: ${result.bot}]\n` +
             `Бот не угадал! Игрок забирает себе шарики: ${input}.`;
 
@@ -118,10 +129,17 @@
           alert(textPlayerWins);
         };
       } else { // ход бота
+        // guess = true - четное; guess = false - нечетное
         if ((guess === true && input % 2 === 0) ||
         (guess === false && input % 2 !== 0)) {
           result.player += input;
           result.bot -= input;
+
+          if (result.player > 10 || result.bot < 0) {
+            input += result.bot;
+            result.player = 10;
+            result.bot = 0;
+          };
 
           textPlayerWins = `[Игрок: ${result.player}, Бот: ${result.bot}]\n` +
             `Правильно! Игрок забирает себе шарики: ${input}.`;
@@ -131,6 +149,12 @@
         } else {
           result.player -= input;
           result.bot += input;
+
+          if (result.player < 0 || result.bot > 10) {
+            input += result.player;
+            result.player = 0;
+            result.bot = 10;
+          };
 
           textBotWins = `[Игрок: ${result.player}, Бот: ${result.bot}]\n` +
             `Неверно! Бот забирает себе шарики: ${input}.`;
@@ -147,17 +171,15 @@
     return function start() {
       let firstMove = undefined;
       let exitCondition = undefined;
-      let lowestScore = getLowestScore(result.player, result.bot);
 
       // ход игрока
-
       const turnPlayer = () => {
         const userInput = prompt(
           `[Игрок: ${result.player}, Бот: ${result.bot}]\n` +
-          `Введите количество шариков (от 1 до ${lowestScore}), затем бот угадает, четное или нечетное это число. `,
+          `Введите количество шариков (от 1 до ${result.player}), затем бот угадает, четное или нечетное это число. `,
         );
 
-        const checkedUserInput = checkUserInput(userInput, lowestScore); // проверка ввода пользователя
+        const checkedUserInput = checkUserInput(userInput, result.player); // проверка ввода пользователя
 
         // выход через "отмена"
         if (checkedUserInput === null) {
@@ -169,7 +191,7 @@
 
         // верный ввод пользователя
         if (checkedUserInput) {
-          const botGuess = getBotGuess(); // загадывание чет/нечет бота
+          const botGuess = getBotGuess(result.player); // загадывание чет/нечет бота
           getRoundResult(playerTurn, checkedUserInput, botGuess); // определение результата раунда
           exitCondition = checkExitConditions(result.player, result.bot); // определение наличия шариков
         } else {
@@ -181,7 +203,7 @@
 
       // ход бота
       const turnBot = () => {
-        const botTurn = getBotTurn(lowestScore);
+        const botTurn = getBotTurn(result.bot);
         const playerGuess = confirm(`[Игрок: ${result.player}, Бот: ${result.bot}]\n` +
           `Бот загадал количество шариков! (${botTurn}). Число чётное?`);
         getRoundResult(playerTurn, botTurn, playerGuess);
