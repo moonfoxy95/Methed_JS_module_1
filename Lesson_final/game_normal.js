@@ -81,6 +81,8 @@
     return playAgain;
   };
 
+  const getLowestScore = (num1, num2) => Math.min(num1, num2);
+
   const game = () => {
     const result = {
       player: 5,
@@ -145,15 +147,17 @@
     return function start() {
       let firstMove = undefined;
       let exitCondition = undefined;
+      let lowestScore = getLowestScore(result.player, result.bot);
 
       // ход игрока
+
       const turnPlayer = () => {
         const userInput = prompt(
           `[Игрок: ${result.player}, Бот: ${result.bot}]\n` +
-          `Введите количество шариков (от 1 до ${result.player}), затем бот угадает, четное или нечетное это число. `,
+          `Введите количество шариков (от 1 до ${lowestScore}), затем бот угадает, четное или нечетное это число. `,
         );
 
-        const checkedUserInput = checkUserInput(userInput, result.player); // проверка ввода пользователя
+        const checkedUserInput = checkUserInput(userInput, lowestScore); // проверка ввода пользователя
 
         // выход через "отмена"
         if (checkedUserInput === null) {
@@ -177,7 +181,7 @@
 
       // ход бота
       const turnBot = () => {
-        const botTurn = getBotTurn(result.bot);
+        const botTurn = getBotTurn(lowestScore);
         const playerGuess = confirm(`[Игрок: ${result.player}, Бот: ${result.bot}]\n` +
           `Бот загадал количество шариков! (${botTurn}). Число чётное?`);
         getRoundResult(playerTurn, botTurn, playerGuess);
